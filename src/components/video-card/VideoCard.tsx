@@ -1,12 +1,13 @@
 import dayjs from 'dayjs'
 import IVideo from '../../types/video.type'
+import VideoStatistics from '../shared/video-statistics.tsx/VideoStatistics'
+import VideoTimeLabel from '../shared/video-time-label/VideoTimeLabel'
 
 const VideoCard = ({ video }: { video: IVideo }) => {
 	const publisedDate = dayjs(video.snippet.publishedAt)
-	console.log(publisedDate)
 
 	return (
-		<article className='rounded-[5px] overflow-hidden shadow-[2px_2px-4px_0] shadow-[#00000040] h-full flex flex-col bg-[#E5E5E5]'>
+		<article className='rounded-[5px] overflow-hidden shadow-[2px_2px_4px_0] shadow-[#00000040] h-full flex flex-col bg-[#E5E5E5] hover:bg-[#F6F6F6] hover:shadow-[4px_4px_8px_0] hover:shadow-[#00000066] transition-all duration-200'>
 			<div className='px-5 pt-5 pb-[10px] flex flex-col grow justify-between'>
 				<div className=''>
 					<img
@@ -14,28 +15,7 @@ const VideoCard = ({ video }: { video: IVideo }) => {
 						className='w-full aspect-video object-cover'
 						alt='preview'
 					/>
-					<div className='flex gap-3 flex-wrap items-center mt-5 justify-center'>
-						<div className='flex gap-[3px] items-center'>
-							<img src='/icons/viewed.svg' className='' />
-							<span className='text-[10px]'>{video.statistics.viewCount}</span>
-						</div>
-						<div className='flex gap-[3px] items-center'>
-							<img src='/icons/liked.svg' className='' />
-							<span className='text-[10px]'>{video.statistics.likeCount}</span>
-						</div>
-						<div className='flex gap-[3px] items-center'>
-							<img src='/icons/dislike.svg' className='' />
-							<span className='text-[10px]'>
-								{video.statistics.dislikeCount}
-							</span>
-						</div>
-						<div className='flex gap-[3px] items-center'>
-							<img src='/icons/comment.svg' className='' />
-							<span className='text-[10px]'>
-								{video.statistics.commentCount}
-							</span>
-						</div>
-					</div>
+					<VideoStatistics statistics={video.statistics} />
 					<h2 className='text-[20px] font-bold text-[#4F4F4F] mt-5 text-right'>
 						{video.snippet.title}
 					</h2>
@@ -43,12 +23,11 @@ const VideoCard = ({ video }: { video: IVideo }) => {
 						{publisedDate.format('DD.MM.YYYY')}
 					</time>
 				</div>
-				<button type='button' className='button mt-5 self-center'>
+				<a href={`/video/${video.id}`} className='button mt-5 self-center'>
 					Далее...
-				</button>
+				</a>
 			</div>
-
-			<div className='h-[5px] bg-primary'></div>
+			<VideoTimeLabel publishedDate={publisedDate} />
 		</article>
 	)
 }
