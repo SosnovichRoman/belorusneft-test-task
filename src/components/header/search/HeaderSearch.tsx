@@ -9,7 +9,7 @@ const HeaderSearch = ({
 	const [searchParams, setSearchParams] = useSearchParams()
 	const [descriptionLike, setDescriptionLike] = useState('')
 	useEffect(() => {
-		setDescriptionLike(searchParams.get('description_like')?.toString()!)
+		setDescriptionLike(searchParams.get('description_like')?.toString() || '')
 	}, [searchParams.get('description_like')])
 
 	return (

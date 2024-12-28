@@ -4,6 +4,10 @@ import IVideo from '../types/video.type'
 
 class VideoService {
 	BASE_URL = 'http://localhost:3000/videos'
+	async getById(id: string) {
+		const response = await axios.get<IVideo[]>(`${this.BASE_URL}?id=${id}`)
+		return response
+	}
 	async getAllWithQuery({
 		_page = '0',
 		_per_page = '12',

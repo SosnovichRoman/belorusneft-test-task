@@ -1,33 +1,47 @@
 import dayjs from 'dayjs'
-import useVideos from '../../hooks/useVideos'
+import { useParams } from 'react-router'
+import useVideo from '../../hooks/useVideo'
 import getVideoLabelColor from '../shared/utils/getVideoLabelColor'
 import VideoStatistics from '../shared/video-statistics.tsx/VideoStatistics'
 
 const VideoPage = () => {
-	const { videos } = useVideos('')
-	const labelColor = getVideoLabelColor(dayjs(videos?.[3].snippet.publishedAt))
+	const { id } = useParams()
+	const { video, isLoading, isError } = useVideo(id!)
+	const labelColor = getVideoLabelColor(dayjs(video?.snippet.publishedAt))
+
+	if (isLoading)
+		return (
+			<div className='container flex justify-center items-center h-[800px]'>
+				Loading...
+			</div>
+		)
+
+	if (isError)
+		return (
+			<div className='container flex justify-center items-center h-[800px]'>
+				Error
+			</div>
+		)
+
 	return (
 		<main>
 			<div className='container flex py-10'>
-				<button
-					// onClick={() => }
-					type='button'
+				<a
+					href='/'
 					className='button p-2 rounded-r-none self-start shadow-none'
 					style={{ backgroundColor: labelColor }}
 				>
 					<img src='/icons/left-arrow.svg' alt='arrow' />
-				</button>
+				</a>
 				<div
 					className='grow min-h-[460px] flex rounded-[5px] rounded-tl-none overflow-hidden'
 					style={{
-						borderColor: getVideoLabelColor(
-							dayjs(videos?.[0].snippet.publishedAt)
-						),
+						borderColor: labelColor,
 						boxShadow: labelColor + '40 5px 10px 10px 0',
 					}}
 				>
 					<img
-						src={videos?.[3].snippet.thumbnails.standard.url}
+						src={video?.snippet.thumbnails.standard.url}
 						className='shadow-[#33333340] shadow-[5px_5px_20px_0] grow'
 					/>
 					<div
@@ -39,7 +53,7 @@ const VideoPage = () => {
 						<div className='grow'>
 							<div className='flex justify-between items-end'>
 								<h1 className='text-[24px] font-bold'>
-									{videos?.[0].snippet.title}
+									{video?.snippet.title}
 								</h1>
 								<time className='text-[#828282] text-[10px] shrink-0'>
 									Четверг, Май 20, 2024
@@ -48,11 +62,11 @@ const VideoPage = () => {
 							<div className='mt-9'>
 								<h2 className='text-[14px]'>Описание</h2>
 								<p className='text-[#828282] text-[12px]'>
-									{videos?.[0].snippet.description}
+									{video?.snippet.description}
 								</p>
 							</div>
 						</div>
-						<VideoStatistics statistics={videos?.[0].statistics!} />
+						<VideoStatistics statistics={video?.statistics!} />
 					</div>
 				</div>
 			</div>
