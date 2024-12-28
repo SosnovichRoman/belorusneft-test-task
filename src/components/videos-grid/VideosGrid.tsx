@@ -6,14 +6,23 @@ import VideoCard from '../video-card/VideoCard'
 const VideosGrid = () => {
 	const [searchParams, setSearchParams] = useSearchParams()
 	const query: IQuery = {
-		_page: searchParams.get('_page') || '',
-		_per_page: searchParams.get('_per_page') || '',
+		_page: searchParams.get('_page') || '1',
+		_per_page: searchParams.get('_limit') || '12',
 		description_like: searchParams.get('description_like') || '',
 		title_like: searchParams.get('title_like') || '',
 		sort: searchParams.get('sort') || '',
 		order: searchParams.get('order') || '',
 	}
-	const { videos } = useVideos(query)
+	const { videos, isLoading, isError } = useVideos(query)
+
+	if (isLoading)
+		return (
+			<div className='container flex items-center justify-center h-96'>
+				Loading...
+			</div>
+		)
+	if (isError)
+		<div className='container flex items-center justify-center h-96'>Error</div>
 
 	return (
 		<div className='container grid grid-cols-4 gap-7 py-7'>

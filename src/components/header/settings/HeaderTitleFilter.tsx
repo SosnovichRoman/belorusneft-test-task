@@ -16,6 +16,7 @@ const HeaderTitleFilter = () => {
 	const handleChange = (value: string) => {
 		setTitle(value)
 		searchParams.set('title_like', value)
+		searchParams.set('_page', '1')
 		changeParams(searchParams)
 	}
 

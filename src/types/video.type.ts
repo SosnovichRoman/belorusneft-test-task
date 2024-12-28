@@ -45,7 +45,7 @@ export default interface IVideo {
 		defaultAudioLanguage: string
 	}
 	statistics: {
-		viewCount: string
+		viewCount: number
 		likeCount: string
 		dislikeCount: string
 		favoriteCount: string

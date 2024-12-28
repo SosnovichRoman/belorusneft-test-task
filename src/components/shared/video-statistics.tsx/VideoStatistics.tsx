@@ -1,5 +1,5 @@
 type StatisticsType = {
-	viewCount: string
+	viewCount: number
 	likeCount: string
 	dislikeCount: string
 	commentCount: string

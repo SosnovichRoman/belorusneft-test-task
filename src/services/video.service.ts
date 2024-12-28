@@ -13,7 +13,7 @@ class VideoService {
 		order = '',
 	}: IQuery) {
 		const response = await axios.get<IVideo[]>(
-			`${this.BASE_URL}?_page=${_page}&_per_page=${_per_page}&_sort=${sort}&_order=${order}&snippet.description_like=${description_like}&snippet.title_like=${title_like}`
+			`${this.BASE_URL}?_page=${_page}&_limit=${_per_page}&_sort=${sort}&_order=${order}&snippet.description_like=${description_like}&snippet.title_like=${title_like}`
 		)
 		return response
 	}
